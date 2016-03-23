@@ -1,0 +1,8 @@
+build:
+  image: golang:1.5
+  environment:
+    - GO15VENDOREXPERIMENT=1
+  commands:
+    - go test -coverprofile=coverage0.out
+    - go test -coverprofile=coverage1.out github.com/libcd/libcd/docker
+    - go test -coverprofile=coverage2.out github.com/libcd/libcd/parse
