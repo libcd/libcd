@@ -150,7 +150,7 @@ func decodeRun(data []byte) (Node, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &RunNode{NodeRun, v.Name}, nil
+	return &RunNode{NodeRun, v.Name, v.Detach, v.Silent}, nil
 }
 
 //
@@ -186,6 +186,8 @@ type nodeParallel struct {
 }
 
 type nodeRun struct {
-	Type NodeType `json:"type"`
-	Name string   `json:"name"`
+	Type   NodeType `json:"type"`
+	Name   string   `json:"name"`
+	Detach bool     `json:"detach,omitempty"`
+	Silent bool     `json:"silent,omitempty"`
 }

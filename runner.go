@@ -165,6 +165,9 @@ func (r *Runner) execRun(node *parse.RunNode) error {
 	r.containers = append(r.containers, name)
 
 	go func() {
+		if node.Silent {
+			return
+		}
 		rc, err := r.conf.Engine.ContainerLogs(name)
 		if err != nil {
 			return
@@ -184,7 +187,7 @@ func (r *Runner) execRun(node *parse.RunNode) error {
 	}()
 
 	// exit when running container in detached mode in background
-	if container.Detach {
+	if node.Detach {
 		return nil
 	}
 

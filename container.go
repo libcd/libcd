@@ -7,7 +7,6 @@ type Container struct {
 	Name           string            `json:"name"`
 	Image          string            `json:"image"`
 	Pull           bool              `json:"pull,omitempty"`
-	Detach         bool              `json:"detach,omitempty"`
 	AuthConfig     Auth              `json:"auth_config,omitempty"`
 	Privileged     bool              `json:"privileged,omitempty"`
 	Environment    map[string]string `json:"environment,omitempty"`
