@@ -16,6 +16,7 @@ func toContainerConfig(c *libcd.Container) *dockerclient.ContainerConfig {
 		Env:        toEnvironmentSlice(c.Environment),
 		Cmd:        c.Command,
 		Entrypoint: c.Entrypoint,
+		WorkingDir: c.WorkingDir,
 		HostConfig: dockerclient.HostConfig{
 			Privileged:       c.Privileged,
 			NetworkMode:      c.Network,

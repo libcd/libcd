@@ -9,6 +9,7 @@ type Container struct {
 	Pull           bool              `json:"pull,omitempty"`
 	AuthConfig     Auth              `json:"auth_config,omitempty"`
 	Privileged     bool              `json:"privileged,omitempty"`
+	WorkingDir     string            `json:"working_dir,omitempty"`
 	Environment    map[string]string `json:"environment,omitempty"`
 	Entrypoint     []string          `json:"entrypoint,omitempty"`
 	Command        []string          `json:"command,omitempty"`
