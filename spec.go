@@ -15,7 +15,7 @@ type Spec struct {
 	Containers []*Container `json:"objects"`
 
 	// Nodes defines the container execution tree.
-	Nodes parse.Tree `json:"nodes"`
+	Nodes *parse.Tree `json:"nodes"`
 }
 
 // lookupContainer is a helper funciton that returns the named container from
