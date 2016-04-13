@@ -55,16 +55,18 @@ type Auth struct {
 
 // Volume defines a container volume.
 type Volume struct {
-	Name  string `json:"name,omitempty"`
-	Alias string `json:"alias,omitempty"`
-	Src   string `json:"src,omitempty"`
-	Dst   string `json:"dst,omitempty"`
+	Name       string            `json:"name,omitempty"`
+	Alias      string            `json:"alias,omitempty"`
+	Driver     string            `json:"driver,omitempty"`
+	DriverOpts map[string]string `json:"driver_opts,omitempty"`
+	External   bool              `json:"external,omitempty"`
 }
 
 // Network defines a container network.
 type Network struct {
-	Name  string `json:"name,omitempty"`
-	Alias string `json:"alias,omitempty"`
-	Src   string `json:"src,omitempty"`
-	Dst   string `json:"dst,omitempty"`
+	Name       string            `json:"name,omitempty"`
+	Alias      string            `json:"alias,omitempty"`
+	Driver     string            `json:"driver,omitempty"`
+	DriverOpts map[string]string `json:"driver_opts,omitempty"`
+	External   bool              `json:"external,omitempty"`
 }
