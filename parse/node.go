@@ -3,6 +3,7 @@ package parse
 const (
 	NodeList     = "list"
 	NodeDefer    = "defer"
+	NodeError    = "error"
 	NodeRecover  = "recover"
 	NodeParallel = "parallel"
 	NodeRun      = "run"

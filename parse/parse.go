@@ -56,6 +56,8 @@ func decodeNode(data []byte) (Node, error) {
 		return decodeList(data)
 	case NodeDefer:
 		return decodeDefer(data)
+	case NodeError:
+		return decodeError(data)
 	case NodeRecover:
 		return decodeRecover(data)
 	case NodeParallel:
@@ -113,6 +115,26 @@ func decodeDefer(data []byte) (Node, error) {
 	return n, nil
 }
 
+func decodeError(data []byte) (Node, error) {
+	v := &nodeError{}
+	err := json.Unmarshal(data, v)
+	if err != nil {
+		return nil, err
+	}
+	b, err := decodeNode(v.Body)
+	if err != nil {
+		return nil, err
+	}
+	d, err := decodeNode(v.Defer)
+	if err != nil {
+		return nil, err
+	}
+	n := NewErrorNode()
+	n.Body = b
+	n.Defer = d
+	return n, nil
+}
+
 func decodeRecover(data []byte) (Node, error) {
 	v := &nodeRecover{}
 	err := json.Unmarshal(data, v)
@@ -164,6 +186,12 @@ type nodeType struct {
 }
 
 type nodeDefer struct {
+	Type  NodeType        `json:"type"`
+	Body  json.RawMessage `json:"body"`
+	Defer json.RawMessage `json:"defer"`
+}
+
+type nodeError struct {
 	Type  NodeType        `json:"type"`
 	Body  json.RawMessage `json:"body"`
 	Defer json.RawMessage `json:"defer"`

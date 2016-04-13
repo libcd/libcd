@@ -87,6 +87,8 @@ func (r *Runner) exec(node parse.Node) error {
 		return r.execList(v)
 	case *parse.DeferNode:
 		return r.execDefer(v)
+	case *parse.ErrorNode:
+		return r.execError(v)
 	case *parse.RecoverNode:
 		return r.execRecover(v)
 	case *parse.ParallelNode:
@@ -114,6 +116,14 @@ func (r *Runner) execDefer(node *parse.DeferNode) error {
 		return err1
 	}
 	return err2
+}
+
+func (r *Runner) execError(node *parse.ErrorNode) error {
+	err := r.exec(node.Body)
+	if err != nil {
+		r.exec(node.Defer)
+	}
+	return err
 }
 
 func (r *Runner) execRecover(node *parse.RecoverNode) error {
