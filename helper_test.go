@@ -50,7 +50,7 @@ var invalid = []byte(`[]`)
 
 // valid json representation, verify parsing
 var sample = []byte(`{
-	"objects": [
+	"containers": [
 		{
 			"name": "container_0",
 			"image": "node:latest" 
@@ -65,7 +65,7 @@ var sample = []byte(`{
 			"name": "volume_0"
 		}
 	],
-	"nodes": {
+	"program": {
 		"type": "list",
 		"body": [
 			{

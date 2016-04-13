@@ -5,6 +5,7 @@ import "fmt"
 // Container defines the container configuration.
 type Container struct {
 	Name           string            `json:"name"`
+	Alias          string            `json:"alias"`
 	Image          string            `json:"image"`
 	Pull           bool              `json:"pull,omitempty"`
 	AuthConfig     Auth              `json:"auth_config,omitempty"`
@@ -54,7 +55,16 @@ type Auth struct {
 
 // Volume defines a container volume.
 type Volume struct {
-	Name string `json:"name,omitempty"`
-	Src  string `json:"src,omitempty"`
-	Dst  string `json:"dst,omitempty"`
+	Name  string `json:"name,omitempty"`
+	Alias string `json:"alias,omitempty"`
+	Src   string `json:"src,omitempty"`
+	Dst   string `json:"dst,omitempty"`
+}
+
+// Network defines a container network.
+type Network struct {
+	Name  string `json:"name,omitempty"`
+	Alias string `json:"alias,omitempty"`
+	Src   string `json:"src,omitempty"`
+	Dst   string `json:"dst,omitempty"`
 }
