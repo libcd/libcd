@@ -25,18 +25,18 @@ func (e *dockerEngine) ContainerStart(container *libcd.Container) (string, error
 	}
 
 	// create and start the container and return the Container ID.
-	name, err := e.client.CreateContainer(conf, "", auth)
+	id, err := e.client.CreateContainer(conf, container.Name, auth)
 	if err != nil {
-		return name, err
+		return id, err
 	}
-	err = e.client.StartContainer(name, &conf.HostConfig)
+	err = e.client.StartContainer(id, &conf.HostConfig)
 	if err != nil {
 
 		// remove the container if it cannot be started
-		e.client.RemoveContainer(name, true, true)
-		return name, err
+		e.client.RemoveContainer(id, true, true)
+		return id, err
 	}
-	return name, nil
+	return id, nil
 }
 
 func (e *dockerEngine) ContainerStop(id string) error {
