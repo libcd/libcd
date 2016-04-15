@@ -44,10 +44,14 @@ func toContainerConfig(c *libcd.Container) *dockerclient.ContainerConfig {
 	if len(c.DNSSearch) != 0 {
 		config.HostConfig.DnsSearch = c.DNSSearch
 	}
+	if len(c.VolumesFrom) != 0 {
+		config.HostConfig.VolumesFrom = c.VolumesFrom
+	}
 
 	config.Volumes = map[string]struct{}{}
 	for _, path := range c.Volumes {
 		if strings.Index(path, ":") == -1 {
+			config.Volumes[path] = struct{}{}
 			continue
 		}
 		parts := strings.Split(path, ":")
