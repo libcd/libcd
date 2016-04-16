@@ -68,6 +68,11 @@ func (r *Runner) Run() error {
 		r.errc <- err
 	}()
 
+	go func() {
+		<-r.ctx.Done()
+		r.cancel()
+	}()
+
 	return nil
 }
 
@@ -167,6 +172,12 @@ func (r *Runner) execRun(node *parse.RunNode) error {
 			return err
 		}
 	}
+	// TODO(bradrydzewski) there is potential here for a race condition where
+	// the context is cancelled just after this line, resulting in the container
+	// still being started.
+	if r.ctx.Err() != nil {
+		return err
+	}
 
 	name, err := r.conf.Engine.ContainerStart(container)
 	if err != nil {
@@ -218,8 +229,16 @@ func (r *Runner) setup() {
 }
 
 func (r *Runner) teardown() {
+	// TODO(bradrydzewski) this is not yet thread safe.
 	for _, container := range r.containers {
 		r.conf.Engine.ContainerStop(container)
 		r.conf.Engine.ContainerRemove(container)
+	}
+}
+
+func (r *Runner) cancel() {
+	// TODO(bradrydzewski) this is not yet thread safe.
+	for _, container := range r.containers {
+		r.conf.Engine.ContainerStop(container)
 	}
 }
