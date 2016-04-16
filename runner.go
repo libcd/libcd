@@ -64,6 +64,7 @@ func (r *Runner) Run() error {
 		r.setup()
 		err := r.exec(r.spec.Nodes.ListNode)
 		r.pipe.Close()
+		r.cancel()
 		r.teardown()
 		r.errc <- err
 	}()
@@ -231,7 +232,6 @@ func (r *Runner) setup() {
 func (r *Runner) teardown() {
 	// TODO(bradrydzewski) this is not yet thread safe.
 	for _, container := range r.containers {
-		r.conf.Engine.ContainerStop(container)
 		r.conf.Engine.ContainerRemove(container)
 	}
 }
