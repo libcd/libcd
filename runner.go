@@ -2,6 +2,7 @@ package libcd
 
 import (
 	"bufio"
+	"time"
 	"fmt"
 
 	"github.com/libcd/libcd/parse"
@@ -197,12 +198,14 @@ func (r *Runner) execRun(node *parse.RunNode) error {
 		defer rc.Close()
 
 		num := 0
+		now := time.Now().UTC()
 		scanner := bufio.NewScanner(rc)
 		for scanner.Scan() {
 			r.pipe.lines <- &Line{
-				Grp: node.Name,
-				Pos: num,
-				Out: scanner.Text(),
+				Proc: container.Alias,
+				Time: int64(time.Since(now).Seconds()),
+				Pos:  num,
+				Out:  scanner.Text(),
 			}
 			num++
 		}

@@ -34,13 +34,15 @@ func newPipe(buffer int) *Pipe {
 
 // Line is a line of console output.
 type Line struct {
-	Grp string `json:"grp"`
-	Pos int    `json:"pos"`
-	Out string `json:"out"`
+	Proc string `json:"proc,omitempty"`
+	Time int64  `json:"time,omitempty"`
+	Type int    `json:"type,omitempty"`
+	Pos  int    `json:"pos,omityempty"`
+	Out  string `json:"out,omitempty"`
 }
 
 func (l *Line) String() string {
-	return fmt.Sprintf("[%s:%v] %s", l.Grp, l.Pos, l.Out)
+	return fmt.Sprintf("[%s:L%v:%vs] %s", l.Proc, l.Pos, l.Time, l.Out)
 }
 
 // TODO(bradrydzewski) consider an alternate buffer impelmentation based on the

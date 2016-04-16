@@ -13,9 +13,9 @@ func TestPipe(t *testing.T) {
 	g.Describe("Pipe", func() {
 		g.It("should get next line from buffer", func() {
 			line := &Line{
-				Grp: "redis",
-				Pos: 1,
-				Out: "starting redis server",
+				Proc: "redis",
+				Pos:  1,
+				Out:  "starting redis server",
 			}
 			pipe := newPipe(10)
 			pipe.lines <- line
@@ -42,9 +42,9 @@ func TestPipe(t *testing.T) {
 		g.Describe("Line output", func() {
 			g.It("should prefix string() with metadata", func() {
 				line := Line{
-					Grp: "redis",
-					Pos: 1,
-					Out: "starting redis server",
+					Proc: "redis",
+					Pos:  1,
+					Out:  "starting redis server",
 				}
 				g.Assert(line.String()).Equal("[redis:1] starting redis server")
 			})
